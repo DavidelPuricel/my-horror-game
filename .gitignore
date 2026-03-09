@@ -1,0 +1,25 @@
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+MemoryCaptures/
+
+Assets/TerrainSampleAssets/
+Assets/StarterAssets/
+Assets/BK_AlchemistHouse/
+Assets/BayatGames/
+Assets/Grass And Flower Pack 1/
+
+*.csproj
+*.unityproj
+*.sln
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb

@@ -1,0 +1,11 @@
+Scurtăturile utile sunt:
+
+Q = Hand Tool
+
+W = Move
+
+E = Rotate
+
+R = Scale
+
+T = Rect Tool
