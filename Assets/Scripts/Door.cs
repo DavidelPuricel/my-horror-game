@@ -3,55 +3,50 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    [SerializeField] private Vector3 openOffset = new Vector3(0f, 3f, 0f);
-    [SerializeField] private float moveDuration = 0.6f;
+    [SerializeField] private float openAngle = 90f;
+    [SerializeField] private float rotateDuration = 0.6f;
 
     private bool isOpen;
-    private Vector3 openPosition;
-    private Vector3 closedPosition;
-    private Coroutine moveRoutine;
+    private Quaternion closedRotation;
+    private Quaternion openRotation;
+    private Coroutine rotateRoutine;
 
     void Start()
     {
-        closedPosition = transform.position;
-        openPosition = closedPosition + openOffset;   
+        closedRotation = transform.localRotation;
+        openRotation = closedRotation * Quaternion.Euler(0f, openAngle, 0f);
         isOpen = false;
     }
 
     public void Toggle()
     {
-        Debug.Log("Door toggled!");
+        Quaternion targetRotation = isOpen ? closedRotation : openRotation;
 
-        Vector3 targetPos = isOpen ? closedPosition : openPosition;
-
-
-        if (moveRoutine != null)
+        if (rotateRoutine != null)
         {
-            StopCoroutine(moveRoutine);
-            moveRoutine = null;
+            StopCoroutine(rotateRoutine);
+            rotateRoutine = null;
         }
 
-        moveRoutine = StartCoroutine(MoveDoor(targetPos));
-
-
+        rotateRoutine = StartCoroutine(RotateDoor(targetRotation));
         isOpen = !isOpen;
     }
 
-    private IEnumerator MoveDoor(Vector3 targetPos)
+    private IEnumerator RotateDoor(Quaternion targetRotation)
     {
-        Vector3 startPos = transform.position;
+        Quaternion startRotation = transform.localRotation;
         float t = 0f;
 
-        float duration = Mathf.Max(0.01f, moveDuration);
+        float duration = Mathf.Max(0.01f, rotateDuration);
 
         while (t < 1f)
         {
             t += Time.deltaTime / duration;
-            transform.position = Vector3.Lerp(startPos, targetPos, t);
+            transform.localRotation = Quaternion.Slerp(startRotation, targetRotation, t);
             yield return null;
         }
 
-        transform.position = targetPos;
-        moveRoutine = null;
+        transform.localRotation = targetRotation;
+        rotateRoutine = null;
     }
 }

@@ -3,25 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Switch : MonoBehaviour, IInteractable
-
-    
 {
-    public Door door;
-    public void Interact() 
+    public Door[] doors;
+
+    public void Interact()
     {
         Debug.Log("Switch pressed!");
-        door.Toggle();
-    }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+
+        foreach (Door door in doors)
+        {
+            if (door != null)
+            {
+                door.Toggle();
+            }
+        }
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+    }
+
     void Update()
     {
-        
     }
 }
