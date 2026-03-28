@@ -1,21 +1,43 @@
 using UnityEngine;
 
-public class Collectible : MonoBehaviour
+
+
+public class Collectible : MonoBehaviour, IInteractable
+
 {
-    public int coinValue = 1;
 
-    void OnTriggerEnter(Collider other)
+    [SerializeField] private int skullIndex = 1; // 1 pentru ochi, 2 pentru entitate
+
+
+
+    public void Interact()
+
     {
-        if (other.CompareTag("Player"))
-        {
-            PlayerCoins playerCoins = other.GetComponent<PlayerCoins>();
 
-            if (playerCoins != null)
-            {
-                playerCoins.AddCoin(coinValue);
-            }
+        Collect();
 
-            Destroy(gameObject);
-        }
     }
+
+
+
+    private void Collect()
+
+    {
+
+        if (EntityPhaseManager.Instance != null)
+
+        {
+
+            EntityPhaseManager.Instance.CollectSkull(skullIndex);
+
+            Debug.Log("Craniu colectat: " + skullIndex);
+
+        }
+
+        
+
+        gameObject.SetActive(false);
+
+    }
+
 }
